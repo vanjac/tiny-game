@@ -10,26 +10,35 @@ byte[] knobs = new byte[2];
 byte readProgram(int i) {
   byte pairB = program[i / 2];
   int pair = pairB & 0xFF;
+  byte ret;
   if(i % 2 == 0) {
-    return (byte) (pair / 0x10);
+    ret = (byte) (pair / 0x10);
   } else {
-    return (byte) (pair & 0x0F);
+    ret = (byte) (pair & 0x0F);
   }
+  println(ret);
+  return ret;
 }
 
 void setup() {
   size(256, 256);
   background(0);
   program = loadBytes("hexTest");
-  for(int i = 0; i < program.length * 2; i++)
-    println(readProgram(i));
 }
 
 void draw() {
+  int i = 0;
   boolean frameComplete = false;
   while(!frameComplete) {
     if(pc >= program.length * 2)
       break;
+    
+    if(i++ > 1024) {
+      println("Infinite loop!");
+      break;
+    }
+    println("--------");
+    
     byte c = readProgram(pc);
     
     byte register, button, knobPos, arg, pixelColor;
@@ -78,6 +87,7 @@ void draw() {
         jump = readProgram(++pc);
         jump *= 16;
         jump += readProgram(++pc);
+        jump *= 16;
         pc = jump - 1;
         break;
       case 8: // wait for frame
