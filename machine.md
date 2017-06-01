@@ -29,12 +29,12 @@ All values and arguments are 4 bit values.
 - `2` Reset flag
 - `3` Toggle flag
 - `4 [register]` Increment register. Set flag on overflow.
-- `5 [register]` Decrement register. Set flag on underflow.
+- `5 [register]` Decrement register. Set flag on underflow. (NOT TESTED)
 - `6 [jump amount]` If flag, clear flag, else skip over `jump amount` instructions.
 - `7 [upper][lower]` Set upper 8 bits of program counter to `upper + lower`, and lower 4 bits to 0
 - `8` Wait for speed tick
 - `9 [button]` Set flag if button is pressed
-- `A [button]` Set flag if button flip flop is set. Reset flip flop.
+- `A [button]` Set flag if button flip flop is set. Reset flip flop. (NOT TESTED)
 - `B [register]` Add change in knob A since last check to register, reset knob change counter. Flag on overflow.
 - `C [register]` knob B
 - `D [code]` Read the register pair given by the upper 2 bits of `code`. Draw a pixel at the X/Y position given by the register pair, with the color given by the lower 2 bits of `code`.
