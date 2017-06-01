@@ -30,7 +30,7 @@ All values and arguments are 4 bit values.
 - `3` Toggle flag
 - `4 [register]` Increment register. Set flag on overflow.
 - `5 [register]` Decrement register. Set flag on underflow.
-- `6 [jump amount]` If flag, clear flag, else jump forward
+- `6 [jump amount]` If flag, clear flag, else skip over `jump amount` instructions.
 - `7 [upper][lower]` Set upper 8 bits of program counter to `upper + lower`, and lower 4 bits to 0
 - `8` Wait for speed tick
 - `9 [button]` Set flag if button is pressed

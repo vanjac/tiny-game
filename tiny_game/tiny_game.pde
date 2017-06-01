@@ -33,8 +33,8 @@ void draw() {
     if(pc >= program.length * 2)
       break;
     
-    if(i++ > 1024) {
-      println("Infinite loop!");
+    if(i++ > 32) {
+      println("Too many instructions!");
       break;
     }
     println("--------");
@@ -79,7 +79,7 @@ void draw() {
         if(flag) {
           flag = false;
         } else {
-          pc += jump - 1;
+          pc += jump;
         }
         break;
       case 7: // jump
