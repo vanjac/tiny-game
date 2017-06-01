@@ -1,8 +1,8 @@
 byte readKnob(int knob) {
   if(knob == 0)
-    return (byte)(mouseX / 16);
+    return (byte)(mouseX * 16 / width);
   else
-    return (byte)(mouseY / 16);
+    return (byte)(mouseY * 16 / height);
 }
 
 void keyPressed() {
