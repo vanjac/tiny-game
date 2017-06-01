@@ -46,7 +46,7 @@ void draw() {
         break;
       case 3: // toggle flag
         println("Toggle flag");
-        flag = true;
+        flag = !flag;
         break;
       case 4: // increment register
         println("Increment register");
@@ -102,15 +102,23 @@ void draw() {
         println("Check knob A");
         register = readProgram(++pc);
         knobPos = readKnob(0);
-        register += knobPos - knobs[0];
+        registers[register] += knobPos - knobs[0];
         knobs[0] = knobPos;
+        if(registers[register] > 15) {
+          registers[register] = 0;
+          flag = true;
+        }
         break;
       case 12: // check knob B
         println("Check knob B");
         register = readProgram(++pc);
         knobPos = readKnob(1);
-        register += knobPos - knobs[1];
+        registers[register] += knobPos - knobs[1];
         knobs[1] = knobPos;
+        if(registers[register] > 15) {
+          registers[register] = 0;
+          flag = true;
+        }
         break;
       case 13: // draw pixel
         println("Draw pixel");
