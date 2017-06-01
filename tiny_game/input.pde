@@ -1,3 +1,6 @@
 byte readKnob(int knob) {
-  return 0;
+  if(knob == 0)
+    return (byte)(mouseX / 16);
+  else
+    return (byte)(mouseY / 16);
 }
