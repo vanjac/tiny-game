@@ -26,8 +26,8 @@ void drawPixel(byte c, byte x, byte y) {
 }
 
 byte readPixel(byte x, byte y) {
-  int xPos = (int)((x * 0.5) * width / 16);
-  int yPos = (int)((y * 0.5) * height / 16);
+  int xPos = (int)((x + 0.5) * width / 16);
+  int yPos = (int)((y + 0.5) * height / 16);
   color c = get(xPos, yPos);
   if(c == COLOR0)
     return 0;
