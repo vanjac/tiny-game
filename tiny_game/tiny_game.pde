@@ -1,3 +1,5 @@
+final boolean DEBUG = false;
+
 byte[] program;
 int pc = 0;
 boolean flag = false;
@@ -16,7 +18,7 @@ byte readProgram(int i) {
   } else {
     ret = (byte) (pair & 0x0F);
   }
-  println(ret);
+  if(DEBUG) println(ret);
   return ret;
 }
 
@@ -37,7 +39,7 @@ void draw() {
       println("Too many instructions!");
       break;
     }
-    println("--------");
+    if(DEBUG) println("--------");
     
     byte c = readProgram(pc);
     
@@ -45,20 +47,20 @@ void draw() {
     int jump;
     switch(c) {
       case 1: // set register
-        println("Set register");
+        if(DEBUG) println("Set register");
         register = readProgram(++pc);
         registers[register] = readProgram(++pc);
         break;
       case 2: // reset flag
-        println("Reset flag");
+        if(DEBUG) println("Reset flag");
         flag = false;
         break;
       case 3: // toggle flag
-        println("Toggle flag");
+        if(DEBUG) println("Toggle flag");
         flag = !flag;
         break;
       case 4: // increment register
-        println("Increment register");
+        if(DEBUG) println("Increment register");
         register = readProgram(++pc);
         if(++registers[register] > 15) {
           registers[register] = 0;
@@ -66,7 +68,7 @@ void draw() {
         }
         break;
       case 5: // decrement register
-        println("Decrement register");
+        if(DEBUG) println("Decrement register");
         register = readProgram(++pc);
         if(--registers[register] < 0) {
           registers[register] = 15;
@@ -74,7 +76,7 @@ void draw() {
         }
         break;
       case 6: // conditional
-        println("Conditional");
+        if(DEBUG) println("Conditional");
         jump = readProgram(++pc);
         if(flag) {
           flag = false;
@@ -83,7 +85,7 @@ void draw() {
         }
         break;
       case 7: // jump
-        println("Jump");
+        if(DEBUG) println("Jump");
         jump = readProgram(++pc);
         jump *= 16;
         jump += readProgram(++pc);
@@ -91,17 +93,17 @@ void draw() {
         pc = jump - 1;
         break;
       case 8: // wait for frame
-        println("Wait for frame");
+        if(DEBUG) println("Wait for frame");
         frameComplete = true;
         break;
       case 9: // check button
-        println("Check button");
+        if(DEBUG) println("Check button");
         button = readProgram(++pc);
         if(buttons[button])
           flag = true;
         break;
       case 10: // check button flip flop
-        println("Check button flip flop");
+        if(DEBUG) println("Check button flip flop");
         button = readProgram(++pc);
         if(buttonFlipFlops[button]) {
           flag = true;
@@ -109,7 +111,7 @@ void draw() {
         }
         break;
       case 11: // check knob A
-        println("Check knob A");
+        if(DEBUG) println("Check knob A");
         register = readProgram(++pc);
         knobPos = readKnob(0);
         registers[register] += knobPos - knobs[0];
@@ -120,7 +122,7 @@ void draw() {
         }
         break;
       case 12: // check knob B
-        println("Check knob B");
+        if(DEBUG) println("Check knob B");
         register = readProgram(++pc);
         knobPos = readKnob(1);
         registers[register] += knobPos - knobs[1];
@@ -131,14 +133,14 @@ void draw() {
         }
         break;
       case 13: // draw pixel
-        println("Draw pixel");
+        if(DEBUG) println("Draw pixel");
         arg = readProgram(++pc);
         register = (byte)((arg / 4) * 2);
         pixelColor = (byte)(arg & 3);
         drawPixel(pixelColor, registers[register], registers[register+1]);
         break;
       case 14: // check pixel
-        println("Check pixel");
+        if(DEBUG) println("Check pixel");
         arg = readProgram(++pc);
         register = (byte)((arg / 4) * 2);
         pixelColor = (byte)(arg & 3);
