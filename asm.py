@@ -71,7 +71,10 @@ if __name__ == "__main__":
             if programLen % 16 != 0:
                 fillerToAdd = 16 - (programLen % 16)
                 program += bytes([0] * fillerToAdd)
-            sectionIndices[words[1]] = len(program) // 16
+            sectionIndex = len(program) // 16
+            sectionName = words[1]
+            print(sectionName, sectionIndex)
+            sectionIndices[sectionName] = sectionIndex
         elif command == 'goto':
             program += bytes([7])
             gotos.append((len(program),words[1]))
