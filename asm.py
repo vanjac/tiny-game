@@ -112,6 +112,7 @@ if __name__ == "__main__":
             pass
         else:
             error(lineNum, "Unrecognized command")
+            break
     
     for g in gotos:
         sectionIndex = sectionIndices[g[1]]
