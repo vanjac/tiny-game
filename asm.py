@@ -108,6 +108,10 @@ if __name__ == "__main__":
             program += bytes([pair * 4 + color])
         elif command == 'beep':
             program += bytes([15])
+        elif command == 'c':
+            pass
+        else:
+            error(lineNum, "Unrecognized command")
     
     for g in gotos:
         sectionIndex = sectionIndices[g[1]]
