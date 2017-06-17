@@ -1,0 +1,234 @@
+s start
+
+butf 0
+butf 1
+clf
+
+c snake x
+set 0 7
+c snake y
+set 1 7
+c snake direction
+set 2 0
+c snake tail x
+set 4 3
+c snake tail y
+set 5 7
+c snake tail direction
+set 3 0
+c dot x
+set 6 9
+c dot y
+set 7 9
+
+s initdot
+
+read 3 3
+if
+    draw 3 1
+endif
+
+s initdot1
+
+dec 2
+if
+    set 2 0
+    dec 6
+    dec 6
+    dec 6
+    goto initdot2
+endif
+dec 2
+if
+    set 2 1
+    dec 7
+    dec 7
+    dec 7
+    goto initdot2
+endif
+dec 2
+if
+    set 2 2
+    inc 6
+    inc 6
+    inc 6
+    goto initdot2
+endif
+dec 2
+if
+    set 2 3
+    inc 7
+    inc 7
+    inc 7
+    goto initdot2
+endif
+
+goto initdot1
+
+s initdot2
+
+read 3 0
+tog
+inc 6
+dec 6
+dec 6
+inc 6
+inc 7
+dec 7
+dec 7
+inc 7
+if
+    goto initdot1
+endif
+draw 3 3
+
+s gameloop
+wait
+wait
+wait
+wait
+wait
+
+s move1
+
+dec 2
+if
+    set 2 0
+    inc 0
+    goto move2
+endif
+dec 2
+if
+    set 2 1
+    inc 1
+    goto move2
+endif
+dec 2
+if
+    set 2 2
+    dec 0
+    goto move2
+endif
+dec 2
+if
+    set 2 3
+    dec 1
+    goto move2
+endif
+
+goto move1
+
+s move2
+if
+    goto end
+endif
+read 0 3
+if
+    draw 0 1
+    goto initdot
+endif
+read 0 0
+tog
+if
+    goto end
+endif
+draw 0 1
+
+
+butf 0
+if
+    dec 2
+    clf
+    draw 0 2
+endif
+butf 1
+if
+    inc 2
+    clf
+    draw 0 3
+endif
+
+
+
+s tailmove1
+
+dec 3
+if
+    set 3 0
+    inc 4
+    goto tailmove2
+endif
+dec 3
+if
+    set 3 1
+    inc 5
+    goto tailmove2
+endif
+dec 3
+if
+    set 3 2
+    dec 4
+    goto tailmove2
+endif
+dec 3
+if
+    set 3 3
+    dec 5
+    goto tailmove2
+endif
+
+goto tailmove1
+
+s tailmove2
+clf
+
+read 2 2
+if
+    dec 3
+    clf
+endif
+read 2 3
+if
+    inc 3
+    clf
+endif
+
+draw 2 0
+
+
+goto gameloop
+
+s end
+
+SET 0 0
+SET 1 12
+
+S WAITLOOP
+WAIT
+INC 0
+IF
+    INC 1
+    IF
+        GOTO CLEAR
+    ENDIF
+ENDIF
+GOTO WAITLOOP
+
+S CLEAR
+
+
+SET 0 0
+SET 1 0
+
+S CLEARLOOP
+DRAW 0 0
+CLF
+INC 0
+IF
+    INC 1
+    IF
+        GOTO START
+    ENDIF
+    WAIT
+ENDIF
+GOTO CLEARLOOP
