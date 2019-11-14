@@ -11,31 +11,31 @@ void keyPressed() {
       buttons[0] = true;
       buttonFlipFlops[0] = true;
       break;
-    case 's':
+    case 'd':
       buttons[1] = true;
       buttonFlipFlops[1] = true;
       break;
-    case 'd':
+    case 'w':
       buttons[2] = true;
       buttonFlipFlops[2] = true;
       break;
-    case 'f':
+    case 'x':
       buttons[3] = true;
       buttonFlipFlops[3] = true;
       break;
-    case 'z':
+    case '4':
       buttons[4] = true;
       buttonFlipFlops[4] = true;
       break;
-    case 'x':
+    case '6':
       buttons[5] = true;
       buttonFlipFlops[5] = true;
       break;
-    case 'c':
+    case '8':
       buttons[6] = true;
       buttonFlipFlops[6] = true;
       break;
-    case 'v':
+    case '2':
       buttons[7] = true;
       buttonFlipFlops[7] = true;
       break;
