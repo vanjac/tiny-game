@@ -1,7 +1,7 @@
 final color COLOR0 = color(0,0,0);
-final color COLOR1 = color(255,0,0);
-final color COLOR2 = color(0,255,0);
-final color COLOR3 = color(255,255,0);
+final color COLOR1 = color(0,128,255);
+final color COLOR2 = color(212,0,255);
+final color COLOR3 = color(255,255,255);
 final color COLOR_ERROR = color(255,255,255);
 
 void drawPixel(byte c, byte x, byte y) {
