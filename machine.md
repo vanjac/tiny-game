@@ -53,4 +53,4 @@ All values and arguments are 4 bit values. Most instructions are 8 bits, some ar
 
 - `.align` to align to a block size
 - `.lbl` to mark a label
-- `.c` for comments
+- `@` for comments

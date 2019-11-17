@@ -95,7 +95,7 @@ if __name__ == "__main__":
             if program_len % block_size != 0:
                 num_filler = block_size - (program_len % block_size)
                 program += bytes([0] * num_filler)
-        elif command == '.c':
+        elif command == '@': # comment
             pass
         else:
             error("Unrecognized command")
