@@ -38,8 +38,10 @@ void draw() {
         break;
       case 1: // conditional
         if (DEBUG) println("Conditional");
-        if (!flags[arg]) {
-          for (int j = 0; j < 3; j++)
+        if (flags[arg]) {
+          flags[arg] = false;
+        } else {
+          for (int j = 0; j < 4; j++)
             incrProgramCounter();
         }
         break;

@@ -29,7 +29,7 @@ All values and arguments are 4 bit values. Most instructions are 8 bits, some ar
 
 - `0 [ignore]` No op
   - `NOP`
-- `1 [flag]` If NOT flag, skip next 3 instruction bytes
+- `1 [flag]` If flag, clear flag, otherwise skip next 4 instruction bytes
   - `IFF flag`
 - `2 [flag]` Reset flag
   - `CLF flag`
