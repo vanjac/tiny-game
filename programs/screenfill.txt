@@ -1,20 +1,29 @@
-SPR 0 0 0
+SET 0 0
 SET 9 0
 
-.lbl loop1
-DPX 0 1
+.align 16
+.lbl fastfill
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
+DPX 15 1
 INC 0
 IFF 0
     CLF 0
-    JMP newline
-JMP loop1
-
-.lbl newline
-INC 1
-IFF 0
-    CLF 0
     JMP loop2
-JMP loop1
+JMP fastfill
 
 .lbl loop2
 
