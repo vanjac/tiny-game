@@ -79,7 +79,7 @@ if __name__ == "__main__":
             program += bytes([make_byte(7, parse_register(words[1])),
                 make_byte(parse_nibble(words[3]), parse_nibble(words[2]))])
         elif command == 'jmp':
-            jumps.append((len(program), words[1], line_num))
+            jumps.append((len(program) + 1, words[1], line_num))
             program += bytes([0, 0])
         elif command == 'dpx':
             program += bytes([make_byte(8 + parse_color(words[2]),
@@ -112,12 +112,12 @@ if __name__ == "__main__":
             if jump_index % 16 != label_index % 16:
                 error("Jump address doesn't match label")
             label_index //= 16
-            program[jump_index] = make_byte(7, 13)
-            program[jump_index + 1] = make_byte(label_index % 16, label_index // 16)
+            program[jump_index - 1] = make_byte(7, 13)
+            program[jump_index] = make_byte(label_index % 16, label_index // 16)
         else:
             label_index %= 256
-            program[jump_index] = make_byte(7, 14)
-            program[jump_index + 1] = make_byte(label_index % 16, label_index // 16)
+            program[jump_index - 1] = make_byte(7, 14)
+            program[jump_index] = make_byte(label_index % 16, label_index // 16)
 
     out_file.write(program)
     out_file.close()
