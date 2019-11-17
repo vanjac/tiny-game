@@ -1,43 +1,68 @@
-byte readKnob(int knob) {
-  if(knob == 0)
-    return (byte)(mouseX * 16 / width);
-  else
-    return (byte)(mouseY * 16 / height);
+int knobAError;
+int knobBError;
+
+void updateInput() {
+  knobAError += mouseX - pmouseX;
+  while (knobAError > width/16) {
+    knobAError -= width/16;
+    incrKnob(8, 6);
+  }
+  while (knobAError < -width/16) {
+    knobAError += width/16;
+    decrKnob(8, 6);
+  }
+  knobBError += mouseY - pmouseY;
+  while (knobBError > width/16) {
+    knobBError -= width/16;
+    incrKnob(10, 7);
+  }
+  while (knobBError < -width/16) {
+    knobBError += width/16;
+    decrKnob(10, 7);
+  }
+}
+
+void incrKnob(int register, int flag) {
+  registers[register]++;
+  if (registers[register] > 15) {
+    registers[register] = 0;
+    flags[flag] = true;
+  }
+}
+
+void decrKnob(int register, int flag) {
+  registers[register]--;
+  if (registers[register] < 0) {
+    registers[register] = 15;
+    flags[flag] = true;
+  }
 }
 
 void keyPressed() {
   switch(key) {
     case 'a':
-      buttons[0] = true;
-      buttonFlipFlops[0] = true;
+      flags[8] = true;
       break;
     case 'd':
-      buttons[1] = true;
-      buttonFlipFlops[1] = true;
+      flags[9] = true;
       break;
     case 'w':
-      buttons[2] = true;
-      buttonFlipFlops[2] = true;
+      flags[10] = true;
       break;
     case 'x':
-      buttons[3] = true;
-      buttonFlipFlops[3] = true;
+      flags[11] = true;
       break;
     case '4':
-      buttons[4] = true;
-      buttonFlipFlops[4] = true;
+      flags[12] = true;
       break;
     case '6':
-      buttons[5] = true;
-      buttonFlipFlops[5] = true;
+      flags[13] = true;
       break;
     case '8':
-      buttons[6] = true;
-      buttonFlipFlops[6] = true;
+      flags[14] = true;
       break;
     case '2':
-      buttons[7] = true;
-      buttonFlipFlops[7] = true;
+      flags[15] = true;
       break;
   }
 }
@@ -45,28 +70,28 @@ void keyPressed() {
 void keyReleased() {
   switch(key) {
     case 'a':
-      buttons[0] = false;
-      break;
-    case 's':
-      buttons[1] = false;
+      flags[8] = false;
       break;
     case 'd':
-      buttons[2] = false;
+      flags[9] = false;
       break;
-    case 'f':
-      buttons[3] = false;
-      break;
-    case 'z':
-      buttons[4] = false;
+    case 'w':
+      flags[10] = false;
       break;
     case 'x':
-      buttons[5] = false;
+      flags[11] = false;
       break;
-    case 'c':
-      buttons[6] = false;
+    case '4':
+      flags[12] = false;
       break;
-    case 'v':
-      buttons[7] = false;
+    case '6':
+      flags[13] = false;
+      break;
+    case '8':
+      flags[14] = false;
+      break;
+    case '2':
+      flags[15] = false;
       break;
   }
 }

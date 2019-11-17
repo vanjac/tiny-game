@@ -1,154 +1,132 @@
+final int CYCLES_PER_FRAME = 32;
 final boolean DEBUG = false;
 
 byte[] program;
-int pc = 0;
-boolean flag = false;
-byte[] registers = new byte[8];
-
-boolean[] buttons = new boolean[8];
-boolean[] buttonFlipFlops = new boolean[8];
-byte[] knobs = new byte[2];
-
-byte readProgram(int i) {
-  byte pairB = program[i / 2];
-  int pair = pairB & 0xFF;
-  byte ret;
-  if(i % 2 == 0) {
-    ret = (byte) (pair / 0x10);
-  } else {
-    ret = (byte) (pair & 0x0F);
-  }
-  if(DEBUG) println(ret);
-  return ret;
-}
+boolean[] flags = new boolean[16];
+byte[] registers = new byte[16];
 
 void setup() {
   size(256, 256);
   background(0);
-  program = loadBytes("hexTest");
+  selectInput("Choose a ROM file:", "fileSelected");
+}
+
+void fileSelected(File selection) {
+  if (selection == null)
+    exit();
+  else
+    program = loadBytes(selection.getAbsolutePath());
 }
 
 void draw() {
-  int i = 0;
-  boolean frameComplete = false;
-  while(!frameComplete) {
-    if(pc >= program.length * 2)
-      break;
-    
-    if(i++ > 32) {
-      println("Too many instructions!");
-      break;
-    }
-    if(DEBUG) println("--------");
-    
-    byte c = readProgram(pc);
-    
-    byte register, button, knobPos, arg, pixelColor;
-    int jump;
-    switch(c) {
-      case 1: // set register
-        if(DEBUG) println("Set register");
-        register = readProgram(++pc);
-        registers[register] = readProgram(++pc);
+  if (program == null || getProgramCounter() > program.length)
+    return;
+  
+  flags[5] = true;
+  updateInput();
+  
+  for (int i = 0; i < CYCLES_PER_FRAME; i++) {
+    if (DEBUG) print(hex(getProgramCounter()) + " ");
+    int instr = readProgram(getProgramCounter());
+    int op = instr >> 4;
+    int arg = instr & 0x0f;
+
+    int instr2, x, y;
+    switch (op) {
+      case 0:
+        if (DEBUG) println("No op");
+        break;
+      case 1: // conditional
+        if (DEBUG) println("Conditional");
+        if (!flags[arg]) {
+          for (int j = 0; j < 3; j++)
+            incrProgramCounter();
+        }
         break;
       case 2: // reset flag
-        if(DEBUG) println("Reset flag");
-        flag = false;
+        if (DEBUG) println("Reset flag");
+        flags[arg] = false;
         break;
       case 3: // toggle flag
-        if(DEBUG) println("Toggle flag");
-        flag = !flag;
+        if (DEBUG) println("Toggle flag");
+        flags[arg] = !flags[arg];
         break;
       case 4: // increment register
-        if(DEBUG) println("Increment register");
-        register = readProgram(++pc);
-        if(++registers[register] > 15) {
-          registers[register] = 0;
-          flag = true;
+        if (DEBUG) println("Increment register");
+        if (++registers[arg] > 15) {
+          registers[arg] = 0;
+          flags[0] = true;
         }
         break;
       case 5: // decrement register
-        if(DEBUG) println("Decrement register");
-        register = readProgram(++pc);
-        if(--registers[register] < 0) {
-          registers[register] = 15;
-          flag = true;
+        if (DEBUG) println("Decrement register");
+        if (--registers[arg] < 0) {
+          registers[arg] = 15;
+          flags[0] = true;
         }
         break;
-      case 6: // conditional
-        if(DEBUG) println("Conditional");
-        jump = readProgram(++pc);
-        if(flag) {
-          flag = false;
-        } else {
-          pc += jump;
-        }
+      case 6: // set register
+        if (DEBUG) println("Set register");
+        instr2 = readProgram(incrProgramCounter());
+        registers[arg] = (byte)(instr2 & 0x0f);
+        i++; // 2 cycles
         break;
-      case 7: // jump
-        if(DEBUG) println("Jump");
-        jump = readProgram(++pc);
-        jump *= 16;
-        jump += readProgram(++pc);
-        jump *= 16;
-        pc = jump - 1;
+      case 7: // set pair
+        if (DEBUG) println("Set pair");
+        instr2 = readProgram(incrProgramCounter());
+        registers[arg] = (byte)(instr2 & 0x0f);
+        registers[(arg + 1) % 16] = (byte)(instr2 >> 4);
+        i++; // 2 cycles
         break;
-      case 8: // wait for frame
-        if(DEBUG) println("Wait for frame");
-        frameComplete = true;
+      case 8: // draw pixel
+      case 9:
+      case 10:
+      case 11:
+        if (DEBUG) println("Draw pixel");
+        x = registers[arg];
+        y = registers[(arg + 1) % 16];
+        drawPixel(op & 3, x, y);
+        i++; // 2 cycles
         break;
-      case 9: // check button
-        if(DEBUG) println("Check button");
-        button = readProgram(++pc);
-        if(buttons[button])
-          flag = true;
-        break;
-      case 10: // check button flip flop
-        if(DEBUG) println("Check button flip flop");
-        button = readProgram(++pc);
-        if(buttonFlipFlops[button]) {
-          flag = true;
-          buttonFlipFlops[button] = false;
-        }
-        break;
-      case 11: // check knob A
-        if(DEBUG) println("Check knob A");
-        register = readProgram(++pc);
-        knobPos = readKnob(0);
-        registers[register] += knobPos - knobs[0];
-        knobs[0] = knobPos;
-        if(registers[register] > 15) {
-          registers[register] = 0;
-          flag = true;
-        }
-        break;
-      case 12: // check knob B
-        if(DEBUG) println("Check knob B");
-        register = readProgram(++pc);
-        knobPos = readKnob(1);
-        registers[register] += knobPos - knobs[1];
-        knobs[1] = knobPos;
-        if(registers[register] > 15) {
-          registers[register] = 0;
-          flag = true;
-        }
-        break;
-      case 13: // draw pixel
-        if(DEBUG) println("Draw pixel");
-        arg = readProgram(++pc);
-        register = (byte)((arg / 4) * 2);
-        pixelColor = (byte)(arg & 3);
-        drawPixel(pixelColor, registers[register], registers[register+1]);
-        break;
-      case 14: // check pixel
-        if(DEBUG) println("Check pixel");
-        arg = readProgram(++pc);
-        register = (byte)((arg / 4) * 2);
-        pixelColor = (byte)(arg & 3);
-        if(pixelColor == readPixel(registers[register], registers[register+1]))
-          flag = true;
+      case 12: // check pixel
+      case 13:
+      case 14:
+      case 15:
+        if (DEBUG) println("Check pixel");
+        x = registers[arg];
+        y = registers[(arg + 1) % 16];
+        if ((op & 3) == readPixel(x, y))
+          flags[1] = true;
+        i++; // 2 cycles
         break;
     }
     
-    pc++;
+    incrProgramCounter();
   }
+}
+
+int readProgram(int addr) {
+  if (addr >= program.length)
+    return 0;
+  return program[addr] & 0xff;
+}
+
+int getProgramCounter() {
+  return registers[15] + (registers[14] << 4) + (registers[13] << 8);
+}
+
+int incrProgramCounter() {
+  registers[15]++;
+  if (registers[15] > 15) {
+    registers[15] = 0;
+    registers[14]++;
+    if (registers[14] > 15) {
+      registers[14] = 0;
+      registers[13]++;
+      if (registers[13] > 15)
+        registers[13] = 0;
+    }
+  }
+  
+  return getProgramCounter();
 }

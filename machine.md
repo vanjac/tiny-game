@@ -41,12 +41,12 @@ All values and arguments are 4 bit values. Most instructions are 8 bits, some ar
   - `INC register`
 - `5 [register]` Decrement register. Set f0 on overflow.
   - `DEC register`
-- `6 [register] [ignore] [value]` Set register
+- `6 [register] [ignore] [value]` Set register (2 cycles)
   - `SET register value`
-- `7 [register] [value2] [value1]` Set register pair (register and following)
+- `7 [register] [value2] [value1]` Set register pair (register and following) (2 cycles)
   - `SPR register value1 value2`
   - `JMP label` (for program counter)
-- `8/9/A/B [register]` Draw a pixel at the X/Y position given by the register pair. 4 instructions for 4 possible colors.
+- `8/9/A/B [register]` Draw a pixel at the X/Y position given by the register pair. 4 instructions for 4 possible colors. (2 cycles)
   - `DPX pair color`
-- `C/D/E/F [register]` Similar to above, but instead of drawing set f1 if the pixel matches the color.
+- `C/D/E/F [register]` Similar to above, but instead of drawing set f1 if the pixel matches the color. (2 cycles)
   - `RPX pair color`

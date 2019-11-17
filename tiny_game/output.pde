@@ -4,7 +4,7 @@ final color COLOR2 = color(212,0,255);
 final color COLOR3 = color(255,255,255);
 final color COLOR_ERROR = color(255,255,255);
 
-void drawPixel(byte c, byte x, byte y) {
+void drawPixel(int c, int x, int y) {
   switch(c) {
     case 0:
       fill(COLOR0);
@@ -25,7 +25,7 @@ void drawPixel(byte c, byte x, byte y) {
   rect(x * width / 16, y * height / 16, width / 16, height / 16);
 }
 
-byte readPixel(byte x, byte y) {
+int readPixel(int x, int y) {
   int xPos = (int)((x + 0.5) * width / 16);
   int yPos = (int)((y + 0.5) * height / 16);
   color c = get(xPos, yPos);
