@@ -1,46 +1,46 @@
-SET 0 0
-SET 9 0
+SET r0 0
+SET r9 0
 
 .align 16
 .lbl fastfill
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-DPX 15 1
-INC 0
-IFF 0
-    CLF 0
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+DPX r15 1
+INC r0
+IFF f0
+    CLF f0
     JMP loop2
 JMP fastfill
 
 .lbl loop2
 
 .lbl knobb
-INC 9
-CLF 0
-DEC 10
-IFF 0
-    CLF 0
+INC r9
+CLF f0
+DEC r10
+IFF f0
+    CLF f0
     JMP end_knobb
 JMP knobb
 .lbl end_knobb
-DEC 9
-INC 10
+DEC r9
+INC r10
 
-IFF 8
-    DPX 8 3
+IFF f8
+    DPX r8 3
     JMP loop2
-DPX 8 2
+DPX r8 2
 JMP loop2
