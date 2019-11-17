@@ -31,7 +31,7 @@ All values and arguments are 4 bit values. Most instructions are 8 bits, some ar
 
 - `0 [ignore]` No op
   - `NOP`
-- `1 [flag]` If NOT flag, increment program counter by 4 bytes (8 nibbles, 4 instructions).
+- `1 [flag]` If NOT flag, skip next 3 instruction bytes
   - `IFF flag`
 - `2 [flag]` Reset flag
   - `CLF flag`
