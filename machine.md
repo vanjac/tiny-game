@@ -43,8 +43,8 @@ All values and arguments are 4 bit values. Most instructions are 8 bits, some ar
   - `DEC register`
 - `6 [register] [ignore] [value]` Set register
   - `SET register value`
-- `7 [register] [value] [value]` Set register pair (register and following)
-  - `SPR register value value`
+- `7 [register] [value2] [value1]` Set register pair (register and following)
+  - `SPR register value1 value2`
   - `JMP label` (for program counter)
 - `8/9/A/B [register]` Draw a pixel at the X/Y position given by the register pair. 4 instructions for 4 possible colors.
   - `DPX pair color`
