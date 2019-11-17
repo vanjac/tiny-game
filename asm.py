@@ -14,7 +14,7 @@ def parse_bounded(word, max_val):
         if n < 0 or n >= max_val:
             error("Value out of range")
             return 0
-        return 1
+        return n
     except:
         error("Not a number")
         return 0
