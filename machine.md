@@ -23,11 +23,9 @@ Other controls:
     - f8-f15: button flags, set when button is pressed and reset when released, but not changed otherwise
 - Screen buffer (16x16, 2 bits per pixel)
 
-## Commands
+## Instructions
 
 All values and arguments are 4 bit values. Most instructions are 8 bits, some are 16 bits.
-
-- `LBL label` to mark a label
 
 - `0 [ignore]` No op
   - `NOP`
@@ -50,3 +48,9 @@ All values and arguments are 4 bit values. Most instructions are 8 bits, some ar
   - `DPX pair color`
 - `C/D/E/F [register]` Similar to above, but instead of drawing set f1 if the pixel matches the color. (2 cycles)
   - `RPX pair color`
+
+## Assembly commands
+
+- `.align` to align to a block size
+- `.lbl` to mark a label
+- `.c` for comments
