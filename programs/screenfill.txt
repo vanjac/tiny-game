@@ -1,0 +1,37 @@
+SPR 0 0 0
+SET 9 0
+
+.lbl loop1
+DPX 0 1
+INC 0
+IFF 0
+    CLF 0
+    JMP newline
+JMP loop1
+
+.lbl newline
+INC 1
+IFF 0
+    CLF 0
+    JMP loop2
+JMP loop1
+
+.lbl loop2
+
+.lbl knobb
+INC 9
+CLF 0
+DEC 10
+IFF 0
+    CLF 0
+    JMP end_knobb
+JMP knobb
+.lbl end_knobb
+DEC 9
+INC 10
+
+IFF 8
+    DPX 8 3
+    JMP loop2
+DPX 8 2
+JMP loop2
