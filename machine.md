@@ -1,6 +1,6 @@
 Virtual console
 
-- 4-bit "cpu"
+- 4-bit "cpu," 3.84 kHz
 - 16x16 pixel, 4 color screen
 - 8 buttons (4 per player), 2 knobs (1 per player)
 - Single square wave with 15 pitches

@@ -1,4 +1,4 @@
-final int CYCLES_PER_FRAME = 32;
+final int CYCLES_PER_FRAME = 64;
 final boolean DEBUG = false;
 
 byte[] program;
