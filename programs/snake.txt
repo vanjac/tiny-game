@@ -1,13 +1,10 @@
-NOP
-NOP
-NOP
-NOP
+SPR r6 9 9  @ dot x
+
 .lbl start
 
 SPR r0 7 7  @ snake xy
 SPR r2 0 0  @ head/tail direction (right, down, left, up, ...)
 SPR r4 3 7  @ snake tail x
-SPR r6 9 9  @ dot x
 
 .lbl initdot
 INC r7
