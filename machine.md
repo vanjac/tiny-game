@@ -7,7 +7,7 @@ Virtual console
 
 Other controls:
 - Speed select (pause, 1/3, 2/3, full)
-- Reset button (doesn't clear registers)
+- Reset button (clears screen and resets program counter, doesn't clear registers/flags)
 
 ## Memory
 
