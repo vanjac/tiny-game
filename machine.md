@@ -6,7 +6,7 @@ Virtual console
 - Single square wave with 15 pitches
 
 Other controls:
-- Speed select (pause, third, half, full)
+- Speed select (pause, 1/3, 2/3, full)
 - Reset button (doesn't clear registers)
 
 ## Memory
@@ -18,7 +18,7 @@ Other controls:
 - 16 flags (f0 - f11)
     - f0 is set by increment/decrement instructions
     - f1 is set by pixel test instructions
-    - f5 is set either 20, 30, or 60 frames per second depending on speed setting
+    - f5 is set either 10, 20, or 30 frames per second depending on speed setting
     - f6/f7 are set when twisting the knob causes the register to overflow
     - f8-f15: button flags, set when button is pressed and reset when released, but not changed otherwise
 - Screen buffer (16x16, 2 bits per pixel)

@@ -1,4 +1,4 @@
-final int CYCLES_PER_FRAME = 64;
+final int CYCLES_PER_FRAME = 128;
 final boolean DEBUG = false;
 
 byte[] program;
@@ -9,6 +9,7 @@ void setup() {
   size(256, 256);
   background(0);
   selectInput("Choose a ROM file:", "fileSelected");
+  frameRate(30);
 }
 
 void fileSelected(File selection) {

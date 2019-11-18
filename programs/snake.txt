@@ -22,7 +22,7 @@ CLF f0
 
 .lbl gameloop
 
-SET r9 5 @ frame count (wait for this many frames)
+SET r9 2 @ wait for this many frames + 1
 CLF f5
 .lbl framewait
 IFF f5
