@@ -17,7 +17,6 @@ TOG f1
 IFF f1
     JMP initdot
     NOP
-    NOP
 DPX r6 3
 CLF f0
 
@@ -29,7 +28,6 @@ CLF f5
 IFF f5
     JMP framewaitnext
     NOP
-    NOP
 INC r6 @ move dot X
 JMP framewait
 
@@ -40,17 +38,14 @@ IFF f8
     DEC r2
     DPX r0 2
     NOP
-    NOP
 IFF f9
     INC r2
     DPX r0 3
-    NOP
     NOP
 CLF f0
 DEC r9
 IFF f0
     JMP gameloop1
-    NOP
     NOP
 JMP framewait
 
@@ -63,38 +58,30 @@ DEC r2
 IFF f0
     SET r2 0
     TOG f2
-    NOP
 IFF f2
     INC r0
     JMP move2
-    NOP
 DEC r2
 IFF f0
     SET r2 1
     TOG f2
-    NOP
 IFF f2
     INC r1
     JMP move2
-    NOP
 DEC r2
 IFF f0
     SET r2 2
     TOG f2
-    NOP
 IFF f2
     DEC r0
     JMP move2
-    NOP
 DEC r2
 IFF f0
     SET r2 3
     TOG f2
-    NOP
 IFF f2
     DEC r1
     JMP move2
-    NOP
 
 JMP move1
 
@@ -103,19 +90,16 @@ IFF f0
     @ hit screen edge
     JMP end
     NOP
-    NOP
 
 RPX r0 3
 IFF f1
     @ eat dot (don't move tail)
     DPX r0 1
     JMP initdot
-    NOP
 RPX r0 0
 TOG f1
 IFF f1
     JMP end
-    NOP
     NOP
 DPX r0 1
 
@@ -126,53 +110,44 @@ DEC r3
 IFF f0
     SET r3 0
     TOG f2
-    NOP
 IFF f2
     INC r4
-    CLF f0
     JMP tailmove2
 DEC r3
 IFF f0
     SET r3 1
     TOG f2
-    NOP
 IFF f2
     INC r5
-    CLF f0
     JMP tailmove2
 DEC r3
 IFF f0
     SET r3 2
     TOG f2
-    NOP
 IFF f2
     DEC r4
-    CLF f0
     JMP tailmove2
 DEC r3
 IFF f0
     SET r3 3
     TOG f2
-    NOP
 IFF f2
     DEC r5
-    CLF f0
     JMP tailmove2
 
 JMP tailmove1
 
 .lbl tailmove2
+CLF f0
 
 RPX r4 2
 IFF f1
     DEC r3
     NOP
     NOP
-    NOP
 RPX r4 3
 IFF f1
     INC r3
-    NOP
     NOP
     NOP
 CLF f0
@@ -205,6 +180,5 @@ DPX r15 0
 INC r0
 IFF f0
     JMP start
-    NOP
     NOP
 JMP fastfill

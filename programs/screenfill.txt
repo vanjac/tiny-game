@@ -23,7 +23,6 @@ INC r0
 IFF f0
     JMP loop2
     NOP
-    NOP
 JMP fastfill
 
 .lbl loop2
@@ -35,15 +34,14 @@ DEC r10
 IFF f0
     JMP end_knobb
     NOP
-    NOP
 JMP knobb
 .lbl end_knobb
 DEC r9
 INC r10
 
+DPX r8 2
 IFF f8
     TOG f8
     DPX r8 3
-    JMP loop2
-DPX r8 2
+    NOP
 JMP loop2
