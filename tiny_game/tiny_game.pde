@@ -10,6 +10,7 @@ void setup() {
   background(0);
   selectInput("Choose a ROM file:", "fileSelected");
   frameRate(30);
+  initSound();
 }
 
 void fileSelected(File selection) {
@@ -106,6 +107,8 @@ void draw() {
     
     incrProgramCounter();
   }
+  
+  updateSound();
 }
 
 int readProgram(int addr) {
